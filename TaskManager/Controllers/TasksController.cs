@@ -13,7 +13,15 @@ namespace TaskManager.Controllers
 			_context = context;
 		}
 
+		[HttpGet]
 		public IActionResult Index()
+		{
+			var tasks = _context.UserTasks.ToList();
+			return View(tasks);
+		}
+
+		[HttpGet]
+		public IActionResult Create()
 		{
 			return View();
 		}

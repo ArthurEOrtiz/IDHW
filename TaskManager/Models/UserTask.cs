@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TaskManager.Attributes;
 
 namespace TaskManager.Models
 {
@@ -9,8 +10,14 @@ namespace TaskManager.Models
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
+
+		[Required]
+		[MinLength(3, ErrorMessage = "Title must be at least 3 characters long.")]
 		public string Title { get; set; } = string.Empty;
 		public string? Description { get; set; }
+
+		[Required]
+		[FutureDate(ErrorMessage = "Due Date must be in the future.")]
 		public DateTime DueDate { get; set; }
 		public bool IsCompleted { get; set; } = false;
 		public DateTime CreatedAt { get; } = DateTime.Now;
