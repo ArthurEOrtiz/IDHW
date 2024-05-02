@@ -1,10 +1,9 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TaskManager.Models
 {
-	public class UserTask
+	public class UserTask()
 	{
 		// Properties
 		[Key]
@@ -16,12 +15,6 @@ namespace TaskManager.Models
 		public bool IsCompleted { get; set; } = false;
 		public DateTime CreatedAt { get; } = DateTime.Now;
 		public DateTime UpdatedAt { get; set; } = DateTime.Now;
-
-		// Constructor
-		public UserTask(DateTime dueDate)
-		{
-			DueDate = dueDate;
-		}
 
 		// Methods
 		public void MarkAsCompleted()
@@ -37,8 +30,6 @@ namespace TaskManager.Models
 			DueDate = dueDate;
 			UpdatedAt = DateTime.Now;
 		}
-
-
 
 	}
 }
