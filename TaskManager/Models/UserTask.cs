@@ -1,8 +1,14 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace TaskManager.Models
 {
-	public class Task
+	public class UserTask
 	{
+		// Properties
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
 		public string Title { get; set; } = string.Empty;
 		public string? Description { get; set; }
@@ -12,7 +18,7 @@ namespace TaskManager.Models
 		public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
 		// Constructor
-		public Task(DateTime dueDate)
+		public UserTask(DateTime dueDate)
 		{
 			DueDate = dueDate;
 		}
