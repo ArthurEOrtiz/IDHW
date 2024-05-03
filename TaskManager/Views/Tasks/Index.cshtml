@@ -25,7 +25,18 @@
         <td>@task.IsCompleted</td>
         <td>@task.DueDate.ToString("yyyy-MM-dd")</td>
         <td>
-          <button onclick="openEditModal('@task.Id', '@task.Title', '@task.Description', '@task.DueDate.ToString("yyyy-MM-dd")')" class="btn btn-primary">Edit</button>
+          <button 
+              onclick="openEditModal(
+                '@task.Id', 
+                '@task.Title', 
+                '@task.Description', 
+                '@task.DueDate.ToString("yyyy-MM-dd")'
+              )" 
+              class="btn btn-primary"
+          >
+            Edit
+          </button>
+
           <a asp-action="Delete" asp-controller="Tasks" asp-route-id="@task.Id" class="btn btn-danger">Delete</a>
         </td>
       </tr>
