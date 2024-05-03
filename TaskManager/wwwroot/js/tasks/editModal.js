@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-  $('#editModalContainer').load('/modals/tasks/editModal.html', function () {
+  $('#editModalContainer').load('/modals/tasks/editModal.cshtml', function () {
     var editModalElement = document.getElementById('editModal');
     var editFormElement = document.getElementById('editForm');
 
