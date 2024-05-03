@@ -1,18 +1,11 @@
 ﻿$(document).ready(function () {
-  $('#editModalContainer').load('/modals/tasks/editModal.cshtml', function () {
-    var editModalElement = document.getElementById('editModal');
-    var editFormElement = document.getElementById('editForm');
 
-    if (editModalElement && editFormElement) {
+  window.openEditModal = function (id) {
+    $.get('/Tasks/EditModal/' + id, function (data) {
+      $('#editModalContainer').html(data);
+      var editModalElement = document.getElementById('editModal');
+      var editFormElement = document.getElementById('editForm');
       var editModal = new bootstrap.Modal(editModalElement);
-
-      window.openEditModal = function (id, title, description, dueDate) {
-        document.getElementById('editId').value = id;
-        document.getElementById('editTitle').value = title;
-        document.getElementById('editDescription').value = description;
-        document.getElementById('editDueDate').value = dueDate;
-        editModal.show();
-      }
 
       editFormElement.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -31,6 +24,9 @@
             }
           });
       });
-    }
-  });
+
+      editModal.show();
+    });
+  }
+
 });

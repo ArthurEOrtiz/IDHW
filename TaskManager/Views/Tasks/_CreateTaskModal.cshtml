@@ -1,0 +1,18 @@
+﻿<div class="modal fade" id="createTaskModal" tabindex="-1" aria-labelledby="createTaskModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createTaskModalLabel">Create Task</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        @{
+          ViewBag.Action = "Create";
+          ViewBag.ButtonText = "Create Task";
+          ViewBag.FormId = "createForm";
+        }
+        @await Html.PartialAsync("_TaskForm", new TaskManager.Models.UserTask())
+      </div>
+    </div>
+  </div>
+</div>

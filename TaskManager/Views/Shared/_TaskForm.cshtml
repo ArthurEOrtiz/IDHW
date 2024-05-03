@@ -1,6 +1,7 @@
 ﻿@model TaskManager.Models.UserTask
 
-<form asp-action="@ViewBag.Action" asp-controller="Tasks" method="post">
+<form id="@ViewBag.FormId" asp-action="@ViewBag.Action" asp-controller="Tasks" method="post">
+  <input asp-for="Id" type="hidden">
   <div class="form-group">
     <label asp-for="Title">Title</label>
     <input asp-for="Title" type="text" class="form-control" id="Title" name="Title" required>

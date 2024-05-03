@@ -50,20 +50,47 @@ namespace TaskManager.Controllers
     }
 
     [HttpPost]
-    public IActionResult Edit(UserTask task)
+    public async Task<IActionResult> Edit(UserTask task)
     {
       if (ModelState.IsValid)
       {
         var existingTask = _context.UserTasks.Find(task.Id);
+
         if (existingTask == null)
         {
           return NotFound();
         }
+
         existingTask.UpdateTask(task.Title, task.Description, task.DueDate);
-        _context.SaveChanges();
+        _context.Update(existingTask);
+
+        await _context.SaveChangesAsync();
+
         return Json(new { success = true });
       }
-      return Json(new { success = false, errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage) });
+
+      return Json(new { 
+        success = false, 
+        errors = ModelState.Values
+          .SelectMany(v => v.Errors)
+          .Select(e => e.ErrorMessage) 
+      });
+
+    }
+
+    public async Task<IActionResult> EditModal(int id)
+    {
+        var task = await _context.UserTasks.FindAsync(id);
+
+        if (task == null)
+        {
+          return NotFound();
+        }
+
+        ViewBag.Action = "Edit";
+        ViewBag.ButtonText = "Save changes";
+        ViewBag.FormId = "editForm";
+        return PartialView("_EditTaskModal", task);
     }
 
     [HttpPost]

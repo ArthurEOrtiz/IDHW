@@ -25,12 +25,7 @@
         <td>@task.IsCompleted</td>
         <td>@task.DueDate.ToString("yyyy-MM-dd")</td>
         <td>
-          <button onclick="openEditModal(
-                '@task.Id',
-                '@task.Title',
-                '@task.Description',
-                '@task.DueDate.ToString("yyyy-MM-dd")'
-              )"
+          <button onclick="openEditModal(@task.Id)"
                   class="btn btn-primary">
             Edit
           </button>
@@ -47,27 +42,11 @@
   Create New Task
 </button>
 
-<!-- Create Task Modal -->
-<div class="modal fade" id="createTaskModal" tabindex="-1" aria-labelledby="createTaskModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="createTaskModalLabel">Create Task</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        @{
-          ViewBag.Action = "Create";
-          ViewBag.ButtonText = "Create Task";
-        }
-        @await Html.PartialAsync("_TaskForm", new TaskManager.Models.UserTask())
-      </div>
-    </div>
-  </div>
-</div>
+@await Html.PartialAsync("_CreateTaskModal")
 
 <!-- Edit Modal Container -->
 <div id="editModalContainer"></div>
+
 
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
