@@ -25,15 +25,13 @@
         <td>@task.IsCompleted</td>
         <td>@task.DueDate.ToString("yyyy-MM-dd")</td>
         <td>
-          <button 
-              onclick="openEditModal(
-                '@task.Id', 
-                '@task.Title', 
-                '@task.Description', 
+          <button onclick="openEditModal(
+                '@task.Id',
+                '@task.Title',
+                '@task.Description',
                 '@task.DueDate.ToString("yyyy-MM-dd")'
-              )" 
-              class="btn btn-primary"
-          >
+              )"
+                  class="btn btn-primary">
             Edit
           </button>
 
@@ -44,7 +42,28 @@
   </tbody>
 </table>
 
-<a asp-action="Create" asp-controller="Tasks" class="btn btn-primary">Create New Task</a>
+<!-- Button to trigger the Create Task modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTaskModal">
+  Create New Task
+</button>
+
+<!-- Create Task Modal -->
+<div class="modal fade" id="createTaskModal" tabindex="-1" aria-labelledby="createTaskModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createTaskModalLabel">Create Task</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        @{
+          ViewBag.Action = "Create";
+          ViewBag.ButtonText = "Create Task";
+        }
+        @await Html.PartialAsync("_TaskForm", new TaskManager.Models.UserTask())
+      </div>
+  </div>
+</div>
 
 <!-- Edit Modal Container -->
 <div id="editModalContainer"></div>
@@ -52,6 +71,3 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/js/tasks/editModal.js"></script>
-
-
-
