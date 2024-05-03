@@ -78,6 +78,7 @@ namespace TaskManager.Controllers
 
     }
 
+    [HttpGet]
     public async Task<IActionResult> EditModal(int id)
     {
         var task = await _context.UserTasks.FindAsync(id);
@@ -94,16 +95,18 @@ namespace TaskManager.Controllers
     }
 
     [HttpPost]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-      var task = _context.UserTasks.Find(id);
+      var task = await _context.UserTasks.FindAsync(id);
       if (task == null)
       {
-        return NotFound();
+        return Json(new { success = false, errors = new[] { "Task not found" } });
       }
+
       _context.UserTasks.Remove(task);
-      _context.SaveChanges();
-      return RedirectToAction("Index");
+      await _context.SaveChangesAsync();
+
+      return Json(new { success = true });
     }
 
     [HttpPost]

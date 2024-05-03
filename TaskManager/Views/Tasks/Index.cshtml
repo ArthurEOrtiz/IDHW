@@ -2,6 +2,7 @@
   Layout = "_Layout";
   ViewData["Title"] = "Tasks";
 }
+
 @model IEnumerable<TaskManager.Models.UserTask>
 
 <h2>Tasks</h2>
@@ -25,29 +26,40 @@
         <td>@task.IsCompleted</td>
         <td>@task.DueDate.ToString("yyyy-MM-dd")</td>
         <td>
-          <button onclick="openEditModal(@task.Id)"
-                  class="btn btn-primary">
+          <button 
+            onclick="openEditModal(@task.Id)"
+            class="btn btn-primary"
+          >
             Edit
           </button>
 
-          <a asp-action="Delete" asp-controller="Tasks" asp-route-id="@task.Id" class="btn btn-danger">Delete</a>
+          <button 
+            onclick="openDeleteModal(@task.Id)"
+            class="btn btn-danger"
+          >
+            Delete
+          </button>
+          
         </td>
       </tr>
     }
   </tbody>
 </table>
 
-<!-- Button to trigger the Create Task modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTaskModal">
   Create New Task
 </button>
 
+<!-- Create Modal  -->
 @await Html.PartialAsync("_CreateTaskModal")
 
-<!-- Edit Modal Container -->
+<!-- Edit Modal -->
 <div id="editModalContainer"></div>
+
+<!-- Delete Modal -->
+@await Html.PartialAsync("_ConfirmationModal")
 
 
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/js/tasks/editModal.js"></script>
+<script src="~/js/tasks/index.js"></script>
