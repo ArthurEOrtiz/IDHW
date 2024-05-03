@@ -17,7 +17,6 @@
       editFormElement.addEventListener('submit', function (e) {
         e.preventDefault();
         var formData = new FormData(this);
-        console.log(this.action);
         fetch('Tasks/Edit', {
           method: 'POST',
           body: formData
