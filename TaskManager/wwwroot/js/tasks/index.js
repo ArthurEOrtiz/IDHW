@@ -29,7 +29,7 @@
     });
   }
 
-  window.openDeleteModal = function (id) {
+  window.openDeleteConfirmationModal = function (id) {
     var confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
     var confirmationButton = document.getElementById('confirmationModalConfirmButton');
     var title = document.getElementById('confirmationModalTitle');
@@ -40,6 +40,33 @@
 
     confirmationButton.onclick = function () {
       fetch('Tasks/Delete/' + id, {
+        method: 'POST'
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            confirmationModal.hide();
+            location.reload();
+          } else {
+            alert('Error: ' + data.errors.join('\n'));
+          }
+        });
+    }
+
+    confirmationModal.show();
+  }
+
+  window.openCompleteConfirmationModal = function (id) {
+    var confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+    var confirmationButton = document.getElementById('confirmationModalConfirmButton');
+    var title = document.getElementById('confirmationModalTitle');
+    var message = document.getElementById('confirmationModalMessage');
+
+    title.innerText = 'Complete Task';
+    message.innerText = 'Are you sure you want to complete this task?';
+
+    confirmationButton.onclick = function () {
+      fetch('Tasks/MarkAsComplete/' + id, {
         method: 'POST'
       })
         .then(response => response.json())

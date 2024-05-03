@@ -27,6 +27,13 @@
         <td>@task.DueDate.ToString("yyyy-MM-dd")</td>
         <td>
           <button 
+            onclick="openCompleteConfirmationModal(@task.Id)"
+            class="btn btn-success"
+          >
+            Complete
+          </button>
+
+          <button 
             onclick="openEditModal(@task.Id)"
             class="btn btn-primary"
           >
@@ -34,7 +41,7 @@
           </button>
 
           <button 
-            onclick="openDeleteModal(@task.Id)"
+            onclick="openDeleteConfirmationModal(@task.Id)"
             class="btn btn-danger"
           >
             Delete
@@ -56,7 +63,7 @@
 <!-- Edit Modal -->
 <div id="editModalContainer"></div>
 
-<!-- Delete Modal -->
+<!-- Confirmation Modal -->
 @await Html.PartialAsync("_ConfirmationModal")
 
 

@@ -104,22 +104,29 @@ namespace TaskManager.Controllers
       }
 
       _context.UserTasks.Remove(task);
+
       await _context.SaveChangesAsync();
 
       return Json(new { success = true });
     }
 
     [HttpPost]
-    public IActionResult MarkAsComplete(int id)
+    public async Task<IActionResult> MarkAsComplete(int id)
     {
-      var task = _context.UserTasks.Find(id);
+      var task = await _context.UserTasks.FindAsync(id);
+
       if (task == null)
       {
         return NotFound();
       }
+
       task.MarkAsCompleted();
-      _context.SaveChanges();
-      return RedirectToAction("Index");
+
+      _context.UserTasks.Update(task);
+
+      await _context.SaveChangesAsync();
+
+      return Json(new { success = true });
     }
   }
 }
