@@ -4,9 +4,9 @@
   ViewBag.Action = "Create";
   ViewBag.ButtonText = "Create Task";
 }
-@model TaskManager.Models.UserTask
 
-@await Html.PartialAsync("_TaskForm", Model)
+
+@await Html.PartialAsync("_TaskForm")
 
 @section Scripts {
   @{
