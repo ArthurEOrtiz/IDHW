@@ -29,17 +29,17 @@
     });
   }
 
-  window.openDeleteConfirmationModal = function (id) {
+  window.openConfirmationModal = function (id, titleText, messageText, url) {
     var confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
     var confirmationButton = document.getElementById('confirmationModalConfirmButton');
     var title = document.getElementById('confirmationModalTitle');
     var message = document.getElementById('confirmationModalMessage');
 
-    title.innerText = 'Delete Task';
-    message.innerText = 'Are you sure you want to delete this task?';
+    title.innerText = titleText;
+    message.innerText = messageText;
 
     confirmationButton.onclick = function () {
-      fetch('Tasks/Delete/' + id, {
+      fetch(url + id, {
         method: 'POST'
       })
         .then(response => response.json())
@@ -50,37 +50,21 @@
           } else {
             alert('Error: ' + data.errors.join('\n'));
           }
+        })
+        .catch(error => {
+          alert('Network error: ' + error);
         });
     }
 
     confirmationModal.show();
   }
 
+  window.openDeleteConfirmationModal = function (id) {
+    openConfirmationModal(id, 'Delete Task', 'Are you sure you want to delete this task?', 'Tasks/Delete/');
+  }
+
   window.openCompleteConfirmationModal = function (id) {
-    var confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
-    var confirmationButton = document.getElementById('confirmationModalConfirmButton');
-    var title = document.getElementById('confirmationModalTitle');
-    var message = document.getElementById('confirmationModalMessage');
-
-    title.innerText = 'Complete Task';
-    message.innerText = 'Are you sure you want to complete this task?';
-
-    confirmationButton.onclick = function () {
-      fetch('Tasks/MarkAsComplete/' + id, {
-        method: 'POST'
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            confirmationModal.hide();
-            location.reload();
-          } else {
-            alert('Error: ' + data.errors.join('\n'));
-          }
-        });
-    }
-
-    confirmationModal.show();
+    openConfirmationModal(id, 'Complete Task', 'Are you sure you want to complete this task?', 'Tasks/MarkAsComplete/');
   }
 
 });
