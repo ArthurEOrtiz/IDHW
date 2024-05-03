@@ -11,7 +11,7 @@ namespace TaskManager.Attributes
       if (value is DateTime)
       {
         DateTime compareDate = (DateTime)value;
-        if (compareDate.Date > DateTime.Now.Date)
+        if (compareDate.Date >= DateTime.Now.Date)
         {
           return true;
         }

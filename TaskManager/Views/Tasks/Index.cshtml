@@ -11,7 +11,9 @@
     <tr>
       <th>Title</th>
       <th>Description</th>
+      <th>Is Completed</th>
       <th>Due Date</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -20,10 +22,25 @@
       <tr>
         <td>@task.Title</td>
         <td>@task.Description</td>
+        <td>@task.IsCompleted</td>
         <td>@task.DueDate.ToString("yyyy-MM-dd")</td>
+        <td>
+          <button onclick="openEditModal('@task.Id', '@task.Title', '@task.Description', '@task.DueDate.ToString("yyyy-MM-dd")')" class="btn btn-primary">Edit</button>
+          <a asp-action="Delete" asp-controller="Tasks" asp-route-id="@task.Id" class="btn btn-danger">Delete</a>
+        </td>
       </tr>
     }
   </tbody>
 </table>
 
 <a asp-action="Create" asp-controller="Tasks" class="btn btn-primary">Create New Task</a>
+
+<!-- Edit Modal Container -->
+<div id="editModalContainer"></div>
+
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/tasks/editModal.js"></script>
+
+
+
