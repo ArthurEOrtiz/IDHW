@@ -5,16 +5,11 @@ namespace TaskManager.Attributes
   [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
   public class FutureDateAttribute : ValidationAttribute
   {
-    
     public override bool IsValid(object? value)
     {
-      if (value is DateTime)
+      if (value is DateTime compareDate && compareDate.Date >= DateTime.Today)
       {
-        DateTime compareDate = (DateTime)value;
-        if (compareDate.Date >= DateTime.Now.Date)
-        {
-          return true;
-        }
+        return true;
       }
 
       return false;

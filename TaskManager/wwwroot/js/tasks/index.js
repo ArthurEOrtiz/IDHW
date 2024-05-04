@@ -15,7 +15,7 @@
             row.setAttribute('data-bs-toggle', 'tooltip');
             row.setAttribute('title', task.description);
             row.addEventListener('click', () => {
-              window.location.href = windows.detailUrl + '/' + task.id;
+              window.location.href = windows.detailsUrl + '/' + task.id;
             });
 
             const tdTitle = document.createElement('td');
@@ -65,10 +65,6 @@
             row.appendChild(tdButtons);
             tbody.appendChild(row);
           });
-
-          // Initialize tooltips for the new rows
-          const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-          const tooltipList = tooltipTriggerList.map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
           // Show the table
           document.getElementById('tasksTable').style.display = 'table';

@@ -13,7 +13,6 @@ namespace TaskManager.Models
 
 		[Required]
 		[MinLength(3, ErrorMessage = "Title must be at least 3 characters long.")]
-
 		public string Title { get; set; } = string.Empty;
 
 		[MaxLength(500, ErrorMessage = "Description must be less than or equal to 500 characters.")]
@@ -43,6 +42,5 @@ namespace TaskManager.Models
 			DueDate = dueDate;
 			UpdatedAt = DateTime.Now;
 		}
-
 	}
 }

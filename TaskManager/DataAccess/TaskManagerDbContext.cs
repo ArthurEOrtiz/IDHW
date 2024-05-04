@@ -9,6 +9,6 @@ namespace TaskManager.DataAccess
 		{
 		}
 
-		public DbSet<UserTask> UserTasks { get; set; } = null!;
+		public DbSet<UserTask> UserTasks { get; set; }
 	}
 }
