@@ -1,4 +1,12 @@
 ﻿
+(() => {
+  const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  const tooltipList = tooltipTriggerList.map((tooltipTriggerEl) => {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+  })
+})();
+
+
 openEditModal = (id) => {
     $.get('/Tasks/EditModal/' + id, (data) => {
       $('#editModalContainer').html(data);
@@ -64,4 +72,5 @@ openDeleteConfirmationModal = (id) => {
 
 openCompleteConfirmationModal = (id) => {
     openConfirmationModal(id, 'Complete Task', 'Are you sure you want to complete this task?', 'Tasks/MarkAsComplete/');
-  }
+}
+

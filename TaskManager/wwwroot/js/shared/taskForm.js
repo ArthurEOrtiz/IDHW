@@ -12,4 +12,6 @@
       counters[index].innerText = `${textArea.value.length}/${limit}`;
     });
   });
+
+
 })();

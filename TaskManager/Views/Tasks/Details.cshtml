@@ -1,0 +1,15 @@
+﻿@{
+	Layout = "_Layout";
+	ViewData["Title"] = "Task Detail";
+}
+
+@model TaskManager.Models.UserTask
+
+<h2>@Model.Title</h2>
+
+<p>@Model.Description</p>
+
+<div>
+	<a href="@Url.Action("Edit", "Tasks", new { id = Model.Id })">Edit</a> |
+	<a href="@Url.Action("Index", "Tasks")">Back to List</a>
+</div>

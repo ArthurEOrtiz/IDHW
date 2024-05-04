@@ -54,7 +54,7 @@ namespace TaskManager.Controllers
     {
       if (ModelState.IsValid)
       {
-        var existingTask = _context.UserTasks.Find(task.Id);
+        var existingTask = await _context.UserTasks.FindAsync(task.Id);
 
         if (existingTask == null)
         {
@@ -92,6 +92,20 @@ namespace TaskManager.Controllers
         ViewBag.ButtonText = "Save changes";
         ViewBag.FormId = "editForm";
         return PartialView("_EditTaskModal", task);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Details(int id)
+    {
+      var task = await _context.UserTasks
+        .FindAsync(id);
+
+      if (task == null)
+      {
+        return NotFound();
+      }
+
+      return View(task);
     }
 
     [HttpPost]
