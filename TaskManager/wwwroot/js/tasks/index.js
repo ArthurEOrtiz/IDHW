@@ -1,15 +1,15 @@
-﻿$(function () {
+﻿$(() => {
 
-  window.openEditModal = function (id) {
-    $.get('/Tasks/EditModal/' + id, function (data) {
+  openEditModal = (id) => {
+    $.get('/Tasks/EditModal/' + id, (data) => {
       $('#editModalContainer').html(data);
-      var editModalElement = document.getElementById('editModal');
-      var editFormElement = document.getElementById('editForm');
-      var editModal = new bootstrap.Modal(editModalElement);
+      const editModalElement = document.getElementById('editModal');
+      const editFormElement = document.getElementById('editForm');
+      const editModal = new bootstrap.Modal(editModalElement);
 
       editFormElement.addEventListener('submit', function (e) {
         e.preventDefault();
-        var formData = new FormData(this);
+        const formData = new FormData(this);
         fetch('Tasks/Edit', {
           method: 'POST',
           body: formData
@@ -29,17 +29,17 @@
     });
   }
 
-  window.openDeleteConfirmationModal = function (id) {
-    var confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
-    var confirmationButton = document.getElementById('confirmationModalConfirmButton');
-    var title = document.getElementById('confirmationModalTitle');
-    var message = document.getElementById('confirmationModalMessage');
+  openConfirmationModal = (id, titleText, messageText, url) => {
+    const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+    const confirmationButton = document.getElementById('confirmationModalConfirmButton');
+    const title = document.getElementById('confirmationModalTitle');
+    const message = document.getElementById('confirmationModalMessage');
 
-    title.innerText = 'Delete Task';
-    message.innerText = 'Are you sure you want to delete this task?';
+    title.innerText = titleText;
+    message.innerText = messageText;
 
-    confirmationButton.onclick = function () {
-      fetch('Tasks/Delete/' + id, {
+    confirmationButton.onclick = () => {
+      fetch(url + id, {
         method: 'POST'
       })
         .then(response => response.json())
@@ -50,37 +50,21 @@
           } else {
             alert('Error: ' + data.errors.join('\n'));
           }
+        })
+        .catch(error => {
+          alert('Network error: ' + error);
         });
     }
 
     confirmationModal.show();
   }
 
-  window.openCompleteConfirmationModal = function (id) {
-    var confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
-    var confirmationButton = document.getElementById('confirmationModalConfirmButton');
-    var title = document.getElementById('confirmationModalTitle');
-    var message = document.getElementById('confirmationModalMessage');
+  openDeleteConfirmationModal = (id) => {
+    openConfirmationModal(id, 'Delete Task', 'Are you sure you want to delete this task?', 'Tasks/Delete/');
+  }
 
-    title.innerText = 'Complete Task';
-    message.innerText = 'Are you sure you want to complete this task?';
-
-    confirmationButton.onclick = function () {
-      fetch('Tasks/MarkAsComplete/' + id, {
-        method: 'POST'
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            confirmationModal.hide();
-            location.reload();
-          } else {
-            alert('Error: ' + data.errors.join('\n'));
-          }
-        });
-    }
-
-    confirmationModal.show();
+  openCompleteConfirmationModal = (id) => {
+    openConfirmationModal(id, 'Complete Task', 'Are you sure you want to complete this task?', 'Tasks/MarkAsComplete/');
   }
 
 });
