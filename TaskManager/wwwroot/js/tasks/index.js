@@ -1,6 +1,5 @@
-﻿$(() => {
-
-  openEditModal = (id) => {
+﻿
+openEditModal = (id) => {
     $.get('/Tasks/EditModal/' + id, (data) => {
       $('#editModalContainer').html(data);
       const editModalElement = document.getElementById('editModal');
@@ -29,7 +28,7 @@
     });
   }
 
-  openConfirmationModal = (id, titleText, messageText, url) => {
+openConfirmationModal = (id, titleText, messageText, url) => {
     const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
     const confirmationButton = document.getElementById('confirmationModalConfirmButton');
     const title = document.getElementById('confirmationModalTitle');
@@ -59,12 +58,10 @@
     confirmationModal.show();
   }
 
-  openDeleteConfirmationModal = (id) => {
+openDeleteConfirmationModal = (id) => {
     openConfirmationModal(id, 'Delete Task', 'Are you sure you want to delete this task?', 'Tasks/Delete/');
   }
 
-  openCompleteConfirmationModal = (id) => {
+openCompleteConfirmationModal = (id) => {
     openConfirmationModal(id, 'Complete Task', 'Are you sure you want to complete this task?', 'Tasks/MarkAsComplete/');
   }
-
-});
