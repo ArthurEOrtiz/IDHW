@@ -14,13 +14,18 @@ namespace TaskManager.Models
 		[Required]
 		[MinLength(3, ErrorMessage = "Title must be at least 3 characters long.")]
 		public string Title { get; set; } = string.Empty;
+
+		[MaxLength(500, ErrorMessage = "Description must be less than or equal to 500 characters.")]
 		public string? Description { get; set; }
 
 		[Required]
 		[FutureDate(ErrorMessage = "The Due Date must be either today or a future date.")]
 		public DateTime DueDate { get; set; } = DateTime.Now.Date;
+
 		public bool IsCompleted { get; set; } = false;
+
 		public DateTime CreatedAt { get; } = DateTime.Now;
+
 		public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
 		// Methods
@@ -37,6 +42,5 @@ namespace TaskManager.Models
 			DueDate = dueDate;
 			UpdatedAt = DateTime.Now;
 		}
-
 	}
 }
