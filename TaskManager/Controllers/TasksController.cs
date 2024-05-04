@@ -16,8 +16,14 @@ namespace TaskManager.Controllers
     [HttpGet]
     public IActionResult Index()
     {
+      return View();
+    }
+
+    [HttpGet]
+    public IActionResult GetTasks()
+    {
       var tasks = _context.UserTasks.ToList();
-      return View(tasks);
+      return Json(tasks);
     }
 
     [HttpGet]
