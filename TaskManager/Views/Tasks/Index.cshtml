@@ -24,42 +24,8 @@
     </tr>
   </thead>
   <tbody>
-@*     @foreach (var task in Model)
-    {
-      <tr 
-        style="cursor: pointer;" 
-        onclick="window.location.href='@Url.Action("Details", "Tasks", new { id = task.Id })'"
-        data-bs-toggle="tooltip" 
-        title="@task.Description"
-      >
-        <td>@task.Title</td>
-        <td>@task.IsCompleted</td>
-        <td>@task.DueDate.ToString("yyyy-MM-dd")</td>
-        <td onclick="event.stopPropagation();">
-          <button 
-            onclick="openCompleteConfirmationModal(@task.Id)"
-            class="btn btn-success"
-          >
-            Complete
-          </button>
-
-          <button 
-            onclick="openEditModal(@task.Id)"
-            class="btn btn-primary"
-          >
-            Edit
-          </button>
-
-          <button 
-            onclick="openDeleteConfirmationModal(@task.Id)"
-            class="btn btn-danger"
-          >
-            Delete
-          </button>
-        </td>
-      </tr>
-    }
-  </tbody> *@
+    <!-- Rendered by `renderTable` in index.js -->
+  </tbody>
 </table>
 
 <button 
@@ -81,74 +47,13 @@
 @await Html.PartialAsync("_ConfirmationModal")
 
 <!-- Scripts -->  
+<script>
+  // Defining urls for the `renderTable` in index.js
+  window.getTasksUrl = '@Url.Action("GetTasks", "Tasks")';
+  window.detailsUrl = '@Url.Action("Details", "Tasks")';
+</script>
+
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/js/tasks/index.js"></script>
 
-<!-- Script tag for testing purposes -->
-<script>
-$(document).ready(function() {
-    $.ajax({
-        url: '@Url.Action("GetTasks", "Tasks")',
-        method: 'GET',
-        success: function(data) {
-            // Hide the loading spinner
-            $('#loadingSpinner').hide();
-         
-            // Populate the table with the data
-            var tbody = $('#tasksTable tbody');
-            tbody.empty();
-            $.each(data, function(i, task) {
-                var row = $('<tr>')
-                    .css('cursor', 'pointer')
-                    .attr('data-bs-toggle', 'tooltip')
-                    .attr('title', task.description)
-                    .click(function() {
-                       window.location.href = '@Url.Action("Details", "Tasks")' + '/' + task.id;
-                    })
-                    .append(
-                        $('<td>').text(task.title),
-                        $('<td>').text(task.isCompleted),
-                        $('<td>').text(new Date(task.dueDate).toLocaleDateString()),
-                        $('<td>').click(function(event) {
-                            event.stopPropagation();
-                        }).append(
-                            $('<button>')
-                              .addClass('btn btn-success')
-                              .text('Complete')
-                              .click(function(e) {
-                                e.stopPropagation();
-                                openCompleteConfirmationModal(task.id);
-                              }),
-                            $('<button>')
-                              .addClass('btn btn-primary')
-                              .text('Edit')
-                              .click(function(e) {
-                                e.stopPropagation();
-                                openEditModal(task.id);
-                              }),
-                            $('<button>')
-                              .addClass('btn btn-danger')
-                              .text('Delete')
-                              .click(function(e) {
-                                e.stopPropagation();
-                                openDeleteConfirmationModal(task.id);
-                              })
-                        )
-                    );
-                tbody.append(row);
-            });
-
-            // Initialize tooltips for the new rows
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-              return new bootstrap.Tooltip(tooltipTriggerEl);
-            });
-
-            // Show the table
-            $('#tasksTable').show();
-        }
-    });
-});
-
-</script>
