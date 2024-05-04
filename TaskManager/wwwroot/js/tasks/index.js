@@ -73,8 +73,10 @@
   })();
 
 openEditModal = (id) => {
-    $.get('/Tasks/EditModal/' + id, (data) => {
-      $('#editModalContainer').html(data);
+  fetch('/Tasks/EditModal/' + id)
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('editModalContainer').innerHTML = data;
       const editModalElement = document.getElementById('editModal');
       const editFormElement = document.getElementById('editForm');
       const editModal = new bootstrap.Modal(editModalElement);
@@ -99,7 +101,7 @@ openEditModal = (id) => {
 
       editModal.show();
     });
-  }
+}
 
 openConfirmationModal = (id, titleText, messageText, url) => {
     const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
