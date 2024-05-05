@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaskManager.DataAccess;
 using TaskManager.Models;
+using TaskManager.ViewModels;
 
 namespace TaskManager.Controllers
 {
@@ -33,15 +34,23 @@ namespace TaskManager.Controllers
     }
 
     [HttpPost]
-    public IActionResult Create(UserTask task)
+    public IActionResult Create(TaskFormViewModel viewModel)
     {
       if (ModelState.IsValid)
       {
-        _context.UserTasks.Add(task);
+        _context.UserTasks.Add(viewModel.Task);
         _context.SaveChanges();
-        return RedirectToAction("Index");
+
+        return Json(new { success = true });
       }
-      return View(task);
+    
+      return Json(new
+      {
+        success = false,
+        errors = ModelState.Values
+          .SelectMany(v => v.Errors)
+          .Select(e => e.ErrorMessage)
+      });
     }
 
     [HttpGet]
@@ -56,19 +65,22 @@ namespace TaskManager.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> Edit(UserTask task)
+    public async Task<IActionResult> Edit(TaskFormViewModel viewModel)
     {
       if (ModelState.IsValid)
       {
-        var existingTask = await _context.UserTasks.FindAsync(task.Id);
+        var existingTask = await _context.UserTasks.FindAsync(viewModel.Task.Id);
 
         if (existingTask == null)
         {
           return NotFound();
         }
 
-        existingTask.UpdateTask(task.Title, task.Description, task.DueDate);
-        _context.Update(existingTask);
+        existingTask.UpdateTask(
+          viewModel.Task.Title, 
+          viewModel.Task.Description, 
+          viewModel.Task.DueDate
+          );
 
         await _context.SaveChangesAsync();
 
@@ -87,24 +99,28 @@ namespace TaskManager.Controllers
     [HttpGet]
     public async Task<IActionResult> EditModal(int id)
     {
-        var task = await _context.UserTasks.FindAsync(id);
+      var task = await _context.UserTasks.FindAsync(id);
 
-        if (task == null)
-        {
-          return NotFound();
-        }
+      if (task == null)
+      {
+        return NotFound();
+      }
 
-        ViewBag.Action = "Edit";
-        ViewBag.ButtonText = "Save changes";
-        ViewBag.FormId = "editForm";
-        return PartialView("_EditTaskModal", task);
+      var viewModel = new TaskFormViewModel()
+      {
+        Task = task,
+        Action = "Edit",
+        ButtonText = "Save Changes",
+        FormId = "editForm"
+      };
+
+      return PartialView("_EditTaskModal", viewModel);
     }
 
     [HttpGet]
     public async Task<IActionResult> Details(int id)
     {
-      var task = await _context.UserTasks
-        .FindAsync(id);
+      var task = await _context.UserTasks.FindAsync(id);
 
       if (task == null)
       {

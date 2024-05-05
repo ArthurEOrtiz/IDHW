@@ -15,7 +15,7 @@
             row.setAttribute('data-bs-toggle', 'tooltip');
             row.setAttribute('title', task.description);
             row.addEventListener('click', () => {
-              window.location.href = windows.detailsUrl + '/' + task.id;
+              window.location.href = window.detailsUrl + '/' + task.id;
             });
 
             const tdTitle = document.createElement('td');
@@ -36,7 +36,7 @@
             });
 
             const btnComplete = document.createElement('button');
-            btnComplete.className = 'btn btn-success';
+            btnComplete.className = 'btn btn-success me-2';
             btnComplete.textContent = 'Complete';
             btnComplete.addEventListener('click', e => {
               e.stopPropagation();
@@ -45,7 +45,7 @@
             tdButtons.appendChild(btnComplete);
 
             const btnEdit = document.createElement('button');
-            btnEdit.className = 'btn btn-primary';
+            btnEdit.className = 'btn btn-primary me-2';
             btnEdit.textContent = 'Edit';
             btnEdit.addEventListener('click', e => {
               e.stopPropagation();
@@ -70,7 +70,36 @@
           document.getElementById('tasksTable').style.display = 'table';
         });
     });
-  })();
+})();
+
+(() => {
+  const createTaskModal = new bootstrap.Modal(document.getElementById('createTaskModal'));
+  const createForm = document.getElementById('createForm');
+
+  createForm.addEventListener('submit', event => {
+    event.preventDefault();
+    const formData = new FormData(createForm);
+
+    fetch('/Tasks/Create', {
+      method: 'POST',
+      body: formData
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          createTaskModal.hide();
+          location.reload();
+        } else {
+          alert('Error: ' + data.errors.join('\n'));
+        }
+      })
+      .catch(error => {
+        console.log(error.message);
+        alert('Network error: ' + error);
+      });
+  });
+})();
+
 
 openEditModal = (id) => {
   fetch('/Tasks/EditModal/' + id)

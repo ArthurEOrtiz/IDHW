@@ -7,9 +7,47 @@
 
 <h2>@Model.Title</h2>
 
+<p>Is completed: @Model.IsCompleted</p>
+
 <p>@Model.Description</p>
 
 <div>
-	<a href="@Url.Action("Edit", "Tasks", new { id = Model.Id })">Edit</a> |
-	<a href="@Url.Action("Index", "Tasks")">Back to List</a>
+	<button class="btn btn-ghost" onclick=openEditModal(@Model.Id)>Edit</button> |
+	<a class="btn btn-ghost" href="@Url.Action("Index", "Tasks")">Back to List</a>
 </div>
+
+<div id="editModalContainer"></div>
+
+<script>
+  openEditModal = (id) => {
+    fetch('/Tasks/EditModal/' + id)
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('editModalContainer').innerHTML = data;
+        const editModalElement = document.getElementById('editModal');
+        const editFormElement = document.getElementById('editForm');
+        const editModal = new bootstrap.Modal(editModalElement);
+
+        editFormElement.addEventListener('submit', function (e) {
+          e.preventDefault();
+          const formData = new FormData(this);
+          fetch('Tasks/Edit', {
+            method: 'POST',
+            body: formData
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                editModal.hide();
+                location.reload();
+              } else {
+                alert('Error: ' + data.errors.join('\n'));
+              }
+            });
+        });
+
+        editModal.show();
+      });
+  }
+
+</script>

@@ -1,4 +1,6 @@
-﻿<div class="modal fade" id="createTaskModal" tabindex="-1" aria-labelledby="createTaskModalLabel" aria-hidden="true">
+﻿@using TaskManager.ViewModels
+
+<div class="modal fade" id="createTaskModal" tabindex="-1" aria-labelledby="createTaskModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -7,11 +9,15 @@
       </div>
       <div class="modal-body">
         @{
-          ViewBag.Action = "Create";
-          ViewBag.ButtonText = "Create Task";
-          ViewBag.FormId = "createForm";
+          var viewModel = new TaskFormViewModel
+          {
+            Task = new TaskManager.Models.UserTask(),
+            Action = "Create",
+            ButtonText = "Create Task",
+            FormId = "createForm"
+          };
         }
-        @await Html.PartialAsync("_TaskForm", new TaskManager.Models.UserTask())
+        @await Html.PartialAsync("_TaskForm", viewModel)
       </div>
     </div>
   </div>
