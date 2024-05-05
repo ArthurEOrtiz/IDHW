@@ -1,29 +1,39 @@
 ﻿@model TaskManager.ViewModels.TaskFormViewModel
 
-<form id="@Model.FormId" asp-action="Create" asp-controller="Tasks" method="post">
+<form id="@Model.FormId" asp-action="@Model.Action" asp-controller="Tasks" method="post">
   <input asp-for="@Model.Task.Id" type="hidden">
   <div class="form-group">
     <label asp-for="Task.Title">Title</label>
-    <input asp-for="Task.Title" type="text" class="form-control" id="Task.Title" name="Task.Title" required>
+    <input 
+      asp-for="Task.Title" 
+      type="text" 
+      class="form-control"  
+      name="Task.Title" 
+      required
+    >
     <span asp-validation-for="Task.Title" class="text-danger"></span>
   </div>
   <div class="form-group">
-    <label asp-for="@Model.Task.Description">Description</label>
-    <textarea asp-for="@Model.Task.Description" class="form-control description" id="Task.Description" name="Task.Description"> </textarea>
+    <label asp-for="Task.Description">Description</label>
+    <textarea 
+      asp-for="Task.Description" 
+      class="form-control description" 
+      name="Task.Description"
+    >
+    </textarea>
     <div class="descriptionCounter text-xs text-gray-500"></div>
-    <span asp-validation-for="@Model.Task.Description" class="text-danger"></span>
+    <span asp-validation-for="Task.Description" class="text-danger"></span>
   </div>
   <div class="form-group mb-4">
     <label asp-for="Task.DueDate">Due Date</label>
     <input 
-      asp-for="@Model.Task.DueDate" 
+      asp-for="Task.DueDate" 
       type="date" 
       class="form-control" 
-      id="Task.DueDate" 
       name="Task.DueDate" 
       required
     >
-    <span asp-validation-for="@Model.Task.DueDate" class="text-danger"></span>
+    <span asp-validation-for="Task.DueDate" class="text-danger"></span>
   </div>
   <button type="submit" class="btn btn-primary">@Model.ButtonText</button>
 </form>

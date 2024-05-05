@@ -15,7 +15,7 @@
             row.setAttribute('data-bs-toggle', 'tooltip');
             row.setAttribute('title', task.description);
             row.addEventListener('click', () => {
-              window.location.href = windows.detailsUrl + '/' + task.id;
+              window.location.href = window.detailsUrl + '/' + task.id;
             });
 
             const tdTitle = document.createElement('td');
