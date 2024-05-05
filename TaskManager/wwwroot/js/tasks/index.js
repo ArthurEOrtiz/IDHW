@@ -36,7 +36,7 @@
             });
 
             const btnComplete = document.createElement('button');
-            btnComplete.className = 'btn btn-success';
+            btnComplete.className = 'btn btn-success me-2';
             btnComplete.textContent = 'Complete';
             btnComplete.addEventListener('click', e => {
               e.stopPropagation();
@@ -45,7 +45,7 @@
             tdButtons.appendChild(btnComplete);
 
             const btnEdit = document.createElement('button');
-            btnEdit.className = 'btn btn-primary';
+            btnEdit.className = 'btn btn-primary me-2';
             btnEdit.textContent = 'Edit';
             btnEdit.addEventListener('click', e => {
               e.stopPropagation();

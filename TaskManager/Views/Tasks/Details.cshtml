@@ -7,13 +7,13 @@
 
 <h2>@Model.Title</h2>
 
+<p>Is completed: @Model.IsCompleted</p>
+
 <p>@Model.Description</p>
-
-
 
 <div>
 	<button class="btn btn-ghost" onclick=openEditModal(@Model.Id)>Edit</button> |
-	<a href="@Url.Action("Index", "Tasks")">Back to List</a>
+	<a class="btn btn-ghost" href="@Url.Action("Index", "Tasks")">Back to List</a>
 </div>
 
 <div id="editModalContainer"></div>
