@@ -70,7 +70,36 @@
           document.getElementById('tasksTable').style.display = 'table';
         });
     });
-  })();
+})();
+
+(() => {
+  const createTaskModal = new bootstrap.Modal(document.getElementById('createTaskModal'));
+  const createForm = document.getElementById('createForm');
+
+  createForm.addEventListener('submit', event => {
+    event.preventDefault();
+    const formData = new FormData(createForm);
+
+    fetch('/Tasks/Create', {
+      method: 'POST',
+      body: formData
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          createTaskModal.hide();
+          location.reload();
+        } else {
+          alert('Error: ' + data.errors.join('\n'));
+        }
+      })
+      .catch(error => {
+        console.log(error.message);
+        alert('Network error: ' + error);
+      });
+  });
+})();
+
 
 openEditModal = (id) => {
   fetch('/Tasks/EditModal/' + id)

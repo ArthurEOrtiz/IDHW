@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaskManager.DataAccess;
 using TaskManager.Models;
+using TaskManager.ViewModels;
 
 namespace TaskManager.Controllers
 {
@@ -33,15 +34,20 @@ namespace TaskManager.Controllers
     }
 
     [HttpPost]
-    public IActionResult Create(UserTask task)
+    public IActionResult Create(TaskFormViewModel viewModel)
     {
       if (ModelState.IsValid)
       {
-        _context.UserTasks.Add(task);
+        _context.UserTasks.Add(viewModel.Task);
         _context.SaveChanges();
-        return RedirectToAction("Index");
+
+        // Return a JSON response with a success status and the new task
+        return Json(new { success = true, task = viewModel.Task });
       }
-      return View(task);
+
+      // If model state is not valid, return a JSON response with an error status
+      var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+      return Json(new { success = false, errors });
     }
 
     [HttpGet]
