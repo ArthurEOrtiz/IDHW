@@ -3,6 +3,9 @@
   const textAreas = document.querySelectorAll('.description');
   const counters = document.querySelectorAll('.descriptionCounter');
 
+  console.log('textAreas:', textAreas);
+  console.log('counters:', counters);
+
   textAreas.forEach((textArea, index) => {
     // Set the initial count
     counters[index].innerText = `${textArea.value.length}/${limit}`;
@@ -12,4 +15,7 @@
       counters[index].innerText = `${textArea.value.length}/${limit}`;
     });
   });
+
+
 })();
+

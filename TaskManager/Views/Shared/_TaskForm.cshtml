@@ -16,12 +16,13 @@
   <div class="form-group">
     <label asp-for="Task.Description">Description</label>
     <textarea 
-      asp-for="Task.Description" 
-      class="form-control description" 
+      asp-for="Task.Description"
+      class="description form-control"
+      oninput="updateCounter(this)"
       name="Task.Description"
     >
     </textarea>
-    <div class="descriptionCounter text-xs text-gray-500"></div>
+    <div class="descriptionCounter text-xs text-gray-500">@(Model.Task.Description?.Length ?? 0) / 500</div>
     <span asp-validation-for="Task.Description" class="text-danger"></span>
   </div>
   <div class="form-group mb-4">
@@ -38,5 +39,21 @@
   <button type="submit" class="btn btn-primary">@Model.ButtonText</button>
 </form>
 
-<script src="~/js/shared/taskForm.js"></script>
+
+
+<script>
+
+  function updateCounter(textArea) {
+    const counter = textArea.nextElementSibling;
+    counter.innerText = `${textArea.value.length}/500`;
+  }
+
+  @* // Initialize counters
+  document.addEventListener('DOMContentLoaded', (event) => {
+    const textAreas = document.querySelectorAll('.description');
+    textAreas.forEach((textArea) => {
+      updateCounter(textArea);
+    });
+  }); *@
+</script>
 
