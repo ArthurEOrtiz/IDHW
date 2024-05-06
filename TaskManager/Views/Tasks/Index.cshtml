@@ -3,7 +3,7 @@
   ViewData["Title"] = "Tasks";
 }
 
-@model IEnumerable<TaskManager.Models.UserTask>
+@model IEnumerable<UserTask>
 
 <div class="container ">
   <h2>Tasks</h2>
@@ -65,6 +65,7 @@
 @section Scripts {
   <script src="~/js/tasks/index.js"></script>
   <script src="~/js/shared/taskForm.js"></script>
+  @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 
 

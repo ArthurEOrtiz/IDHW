@@ -22,7 +22,7 @@ window.validateDueDate = (e) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const taskFormDateValidator = e.nextElementSibling.nextElementSibling;
+  const taskFormDateValidator = e.nextElementSibling;
 
   taskFormDateValidator.textContent = date < today
     ? 'Due date must be today or in the future.'

@@ -20,7 +20,7 @@ namespace TaskManager.Models
 		public string? Description { get; set; }
 
 		[Required]
-		[FutureDate(ErrorMessage = "The Due Date must be either today or a future date.")]
+		[FutureDate(ErrorMessage = "Due date must be today or in the future.")]
 		public DateTime DueDate { get; set; } = DateTime.Now.Date;
 
 		public bool IsCompleted { get; set; } = false;
