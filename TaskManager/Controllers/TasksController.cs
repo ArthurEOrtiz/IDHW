@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TaskManager.DataAccess;
-using TaskManager.Models;
 using TaskManager.ViewModels;
 
 namespace TaskManager.Controllers
@@ -21,29 +21,23 @@ namespace TaskManager.Controllers
     }
 
     [HttpGet]
-    public IActionResult GetTasks()
+    public async Task<IActionResult> GetTasks()
     {
-      var tasks = _context.UserTasks.ToList();
+      var tasks = await _context.UserTasks.ToListAsync();
       return Json(tasks);
     }
 
-    [HttpGet]
-    public IActionResult Create()
-    {
-      return View();
-    }
-
     [HttpPost]
-    public IActionResult Create(TaskFormViewModel viewModel)
+    public async Task<IActionResult> Create(TaskFormViewModel viewModel)
     {
       if (ModelState.IsValid)
       {
-        _context.UserTasks.Add(viewModel.Task);
-        _context.SaveChanges();
+        await _context.UserTasks.AddAsync(viewModel.Task);
+        await _context.SaveChangesAsync();
 
         return Json(new { success = true });
       }
-    
+
       return Json(new
       {
         success = false,
@@ -51,17 +45,6 @@ namespace TaskManager.Controllers
           .SelectMany(v => v.Errors)
           .Select(e => e.ErrorMessage)
       });
-    }
-
-    [HttpGet]
-    public IActionResult Edit(int id)
-    {
-      var task = _context.UserTasks.Find(id);
-      if (task == null)
-      {
-        return NotFound();
-      }
-      return View(task);
     }
 
     [HttpPost]

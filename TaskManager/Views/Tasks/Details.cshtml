@@ -30,8 +30,9 @@
 
         editFormElement.addEventListener('submit', function (e) {
           e.preventDefault();
-          const formData = new FormData(this);
-          fetch('Tasks/Edit', {
+          const formData = new FormData(editFormElement);
+          console.log("formData", Array.from(formData.entries()));
+          fetch('/Tasks/Edit', {
             method: 'POST',
             body: formData
           })
