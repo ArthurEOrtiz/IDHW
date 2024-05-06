@@ -24,6 +24,7 @@ const createButton = (className, text, clickHandler) => {
   const button = document.createElement('button');
   button.className = className;
   button.textContent = text;
+  button.setAttribute('aria-label', text);
   button.addEventListener('click', e => {
     e.stopPropagation();
     clickHandler();
