@@ -170,3 +170,5 @@ openCompleteConfirmationModal = (id) => {
     openConfirmationModal(id, 'Complete Task', 'Are you sure you want to complete this task?', 'Tasks/MarkAsComplete/');
 }
 
+
+

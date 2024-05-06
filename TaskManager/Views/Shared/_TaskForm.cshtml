@@ -1,17 +1,19 @@
 ﻿@model TaskManager.ViewModels.TaskFormViewModel
 
 <form id="@Model.FormId" asp-action="@Model.Action" asp-controller="Tasks" method="post">
-  <input asp-for="@Model.Task.Id" type="hidden">
+  <input asp-for="@Model.Task.Id" class="taskFormTitle" type="hidden">
   <div class="form-group">
     <label asp-for="Task.Title">Title</label>
     <input 
       asp-for="Task.Title" 
       type="text" 
       class="form-control"  
+      oninput="validateTitle(this)"
       name="Task.Title" 
+      maxlength="50"
       required
     >
-    <span asp-validation-for="Task.Title" class="text-danger"></span>
+    <span class="text-danger"></span>
   </div>
   <div class="form-group">
     <label asp-for="Task.Description">Description</label>
@@ -19,41 +21,27 @@
       asp-for="Task.Description"
       class="description form-control"
       oninput="updateCounter(this)"
+      maxlength="500"
       name="Task.Description"
     >
     </textarea>
-    <div class="descriptionCounter text-xs text-gray-500">@(Model.Task.Description?.Length ?? 0) / 500</div>
-    <span asp-validation-for="Task.Description" class="text-danger"></span>
+    <span>@(Model.Task.Description?.Length ?? 0)/500</span>
   </div>
   <div class="form-group mb-4">
     <label asp-for="Task.DueDate">Due Date</label>
     <input 
       asp-for="Task.DueDate" 
       type="date" 
-      class="form-control" 
+      class="form-control"
+      oninput="validateDueDate(this)"
       name="Task.DueDate" 
       required
     >
-    <span asp-validation-for="Task.DueDate" class="text-danger"></span>
+    <span class="text-danger"></span>
   </div>
   <button type="submit" class="btn btn-primary">@Model.ButtonText</button>
 </form>
 
 
 
-<script>
-
-  function updateCounter(textArea) {
-    const counter = textArea.nextElementSibling;
-    counter.innerText = `${textArea.value.length}/500`;
-  }
-
-  @* // Initialize counters
-  document.addEventListener('DOMContentLoaded', (event) => {
-    const textAreas = document.querySelectorAll('.description');
-    textAreas.forEach((textArea) => {
-      updateCounter(textArea);
-    });
-  }); *@
-</script>
 
