@@ -3,9 +3,7 @@
   ViewData["Title"] = "Tasks";
 }
 
-@section Styles {
-  <link rel="stylesheet" href="~/css/tasks/index.css" />
-}
+@section Styles { <link rel="stylesheet" href="~/css/tasks/index.css" /> }
 
 @model IEnumerable<UserTask>
 
@@ -94,7 +92,7 @@
 
 <!-- Scripts -->
 @section Scripts {
-  @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+  @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
   <script src="~/js/tasks/index.js"></script>
   <script src="~/js/shared/taskForm.js"></script>
 }
