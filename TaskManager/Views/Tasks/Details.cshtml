@@ -18,7 +18,7 @@
 					Edit
 	</button> 
 	|
-	<button class="btn btn-ghost"
+	<button class="btn btn-ghost @(Model.IsCompleted ? "disabled" : "")"
 					onclick=window.modals.openCompleteConfirmationModal(@Model.Id)
 				  aria-label="Complete Task">
 					Complete

@@ -19,7 +19,7 @@
   });
 
 
-  const createButton = (className, text, clickHandler) => {
+  const createButton = (className, text, clickHandler, task) => {
     const button = document.createElement('button');
     button.className = className;
     button.textContent = text;
@@ -28,6 +28,13 @@
       e.stopPropagation();
       clickHandler();
     });
+
+    // If the task is complete, disable the `Complete` button
+    if (text === 'Complete' && task.isCompleted) {
+      button.setAttribute('disabled', 'disabled');
+      button.classList.add('disabled');
+    }
+
     return button;
   }
 
@@ -46,8 +53,24 @@
       window.location.href = `/Tasks/Details/${task.id}`;
     });
 
+    // If the task is complete, make the whole row green and the text white.
+    if (task.isCompleted) {
+      row.classList.add('bg-success', 'text-white');
+    }
+
+    // If the task's due date is before today, and is not completed, make the whole row red and the text white.
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const taskDueDate = new Date(task.dueDate);
+    if (taskDueDate < today && !task.isCompleted) {
+      row.classList.add('bg-danger', 'text-white');
+    }
+
+    // Align all rows to vertical center.
+    row.classList.add('align-middle');
+
     row.appendChild(createTableCell(task.title));
-    row.appendChild(createTableCell(task.isCompleted));
+    row.appendChild(createTableCell(task.isCompleted.toString().toUpperCase()));
     row.appendChild(createTableCell(new Date(task.dueDate).toLocaleDateString()));
 
     const tdButtons = document.createElement('td');
@@ -55,9 +78,9 @@
       event.stopPropagation();
     });
 
-    tdButtons.appendChild(createButton('btn btn-success me-2', 'Complete', () => window.modals.openCompleteConfirmationModal(task.id)));
-    tdButtons.appendChild(createButton('btn btn-primary me-2', 'Edit', () => window.modals.openEditModal(task.id)));
-    tdButtons.appendChild(createButton('btn btn-danger', 'Delete', () => window.modals.openDeleteConfirmationModal(task.id)));
+    tdButtons.appendChild(createButton('btn btn-success me-2', 'Complete', () => window.modals.openCompleteConfirmationModal(task.id), task));
+    tdButtons.appendChild(createButton('btn btn-primary me-2', 'Edit', () => window.modals.openEditModal(task.id), task));
+    tdButtons.appendChild(createButton('btn btn-danger', 'Delete', () => window.modals.openDeleteConfirmationModal(task.id), task));
 
     row.appendChild(tdButtons);
 

@@ -26,7 +26,6 @@
           }
         })
         .catch(error => {
-          console.error(error.message);
           alert('Network error: ' + error);
         });
     }
@@ -62,7 +61,6 @@
                 }
               })
               .catch(error => {
-                console.error(error);
                 alert('Network error: ' + error);
               });
           });
