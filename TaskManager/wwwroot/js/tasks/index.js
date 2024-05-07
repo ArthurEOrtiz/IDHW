@@ -87,8 +87,56 @@
     return row;
   }
 
+  // Search by Title
+  searchByTitle = () => {
+    const searchValue = document.getElementById('searchTitle').value.toLowerCase();
+    const tasks = Array.from(document.querySelectorAll('#tasksTable tbody tr'));
+
+    tasks.forEach(task => {
+      const title = task.children[0].textContent.toLowerCase();
+      if (title.includes(searchValue)) {
+        task.style.display = '';
+      } else {
+        task.style.display = 'none';
+      }
+    });
+  }
+
+  document.getElementById('searchTitle').addEventListener('input', () => {
+    searchByTitle()
+  });
+
+
+  // Order by Title
+  orderTasksByTitle = (order) => {
+    const tasks = Array.from(document.querySelectorAll('#tasksTable tbody tr'));
+    const sortedTasks = tasks.sort((a, b) => {
+      const titleA = a.children[0].textContent.toLowerCase();
+      const titleB = b.children[0].textContent.toLowerCase();
+      // localeCompare() returns a negative number if the first string comes before the second string
+      // returns a positive number if the first string comes after the second string
+      // returns 0 if the strings are equal
+      // This basically sorts strings in *lexicographical* order.
+      return order === 'asc' ? titleA.localeCompare(titleB) : titleB.localeCompare(titleA);
+    });
+
+    const tbody = document.querySelector('#tasksTable tbody');
+
+    sortedTasks.forEach(task => {
+      tbody.appendChild(task);
+    });
+  }
+
+  document.getElementById('ascendingTitle').addEventListener('click', () => {
+    orderTasksByTitle('asc');
+  });
+
+  document.getElementById('descendingTitle').addEventListener('click', () => {
+    orderTasksByTitle('desc');
+  });
+
   // Order by Due Date
-  orderTasks = (order) => {
+  orderTasksByDueDate = (order) => {
     const tasks = Array.from(document.querySelectorAll('#tasksTable tbody tr'));
     const sortedTasks = tasks.sort((a, b) => {
       const dateA = new Date(a.children[2].textContent);
@@ -98,21 +146,19 @@
     });
 
     const tbody = document.querySelector('#tasksTable tbody');
-    //tbody.innerHTML = '';
 
     sortedTasks.forEach(task => {
       tbody.appendChild(task);
     });
   }
 
-  // Ascending Order
   document.getElementById('ascendingDueDate').addEventListener('click', () => {
-    orderTasks('asc');
+    orderTasksByDueDate('asc');
   });
 
-  // Decending Order
+
   document.getElementById('descendingDueDate').addEventListener('click', () => {
-    orderTasks('desc');
+    orderTasksByDueDate('desc');
   });
 
   // Create Task Modal
