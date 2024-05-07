@@ -18,7 +18,6 @@
       });
   });
 
-
   const createButton = (className, text, clickHandler, task) => {
     const button = document.createElement('button');
     button.className = className;
@@ -86,11 +85,39 @@
     row.appendChild(tdButtons);
 
     return row;
-   }
+  }
+
+  // Order by Due Date
+  orderTasks = (order) => {
+    const tasks = Array.from(document.querySelectorAll('#tasksTable tbody tr'));
+    const sortedTasks = tasks.sort((a, b) => {
+      const dateA = new Date(a.children[2].textContent);
+      const dateB = new Date(b.children[2].textContent);
+
+      return order === 'asc' ? dateA - dateB : dateB - dateA;
+    });
+
+    const tbody = document.querySelector('#tasksTable tbody');
+    //tbody.innerHTML = '';
+
+    sortedTasks.forEach(task => {
+      tbody.appendChild(task);
+    });
+  }
+
+  // Ascending Order
+  document.getElementById('ascendingDueDate').addEventListener('click', () => {
+    orderTasks('asc');
+  });
+
+  // Decending Order
+  document.getElementById('descendingDueDate').addEventListener('click', () => {
+    orderTasks('desc');
+  });
 
   // Create Task Modal
   // So far this only happens in index.cshtml, this could move if things change.
-  // Edit and Confirmation modals are in site.js as they will be needed else where.
+  // Edit and Confirmation modals are in site.js, they will be needed else where.
   const createTaskModal = new bootstrap.Modal(document.getElementById('createTaskModal'));
   const createForm = document.getElementById('createForm');
 
