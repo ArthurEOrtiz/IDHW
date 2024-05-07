@@ -26,6 +26,7 @@
 <div id="editModalContainer"></div>
 
 @section Scripts {
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 	<script src="~/js/tasks/details.js"></script>
 	<script src="~/js/shared/taskForm.js"></script>
 }

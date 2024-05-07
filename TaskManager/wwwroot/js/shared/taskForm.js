@@ -1,34 +1,38 @@
-﻿window.validateTitle = (e) => {
-  const title = e.value;
-  const taskFormTitleValidator = e.nextElementSibling;
-
-  taskFormTitleValidator.textContent = title.length < 3
-    ? 'Title must be at least 3 characters long.'
-    : title.length > 50
-      ? 'Title must be less than 50 characters long.'
-      : '';
-};
-
-window.updateCounter = (e) => {
+﻿window.updateCounter = (e) => {
   const counter = e.nextElementSibling;
   counter.innerText = `${e.value.length}/500`;
 };
 
 
-window.validateDueDate = (e) => {
-  const date = new Date(e.value);
-  date.setHours(0, 0, 0, 0);
+// This applies the custom model attribute to the jquery validation.
+$(function () {
+  $.validator.addMethod("futuredate", function (value, element) {
+    var today = new Date();
+    today.setHours(0, 0, 0, 0); // Set the time to 00:00:00
+    var inputDate = new Date(value);
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+    return this.optional(element) || inputDate >= today;
+  }, "");
 
-  const taskFormDateValidator = e.nextElementSibling.nextElementSibling;
+  $.validator.unobtrusive.adapters.addBool("futuredate");
+});
 
-  taskFormDateValidator.textContent = date < today
-    ? 'Due date must be today or in the future.'
-    : '';
-};
+// This ensures the all forms get parsed for validation
+$(function () {
+  $("form").each(function () {
+    $(this).data("validator", null);
+    $.validator.unobtrusive.parse(this);
+  });
+});
 
+// This is for reparsing the form to apply the validation, if opened in a modal.
+$(document).on('shown.bs.modal', '.modal', function () {
+  $("form").each(function () {
+    $(this).removeData("validator");
+    $(this).removeData("unobtrusiveValidation");
+    $.validator.unobtrusive.parse(this);
+  });
+});
 
 
 
