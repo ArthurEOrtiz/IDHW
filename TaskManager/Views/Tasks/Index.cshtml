@@ -3,9 +3,13 @@
   ViewData["Title"] = "Tasks";
 }
 
+@section Styles {
+  <link rel="stylesheet" href="~/css/tasks/index.css" />
+}
+
 @model IEnumerable<UserTask>
 
-<div class="container ">
+<div class="container">
   <h2>Tasks</h2>
 
   <div class="spinner-border text-primary" 
@@ -15,11 +19,8 @@
   </div>
 
   <div class="d-flex justify-content-center">
-    <div id="tasksTable" 
-         style="display: none;">
- 
-        <table class="table table-striped table-hover"
-               style="width: auto;">
+    <div id="tasksTable">
+        <table class="table table-hover">
           <thead class="thead-dark">
             <tr>
               <th>Title</th>
