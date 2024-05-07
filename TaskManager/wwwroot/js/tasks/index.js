@@ -62,6 +62,7 @@
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const taskDueDate = new Date(task.dueDate);
+
     if (taskDueDate < today && !task.isCompleted) {
       row.classList.add('bg-danger', 'text-white');
     }
