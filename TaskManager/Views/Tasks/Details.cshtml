@@ -16,7 +16,14 @@
 					onclick=window.modals.openEditModal(@Model.Id)
 					aria-label="Edit">
 					Edit
-	</button> |
+	</button> 
+	|
+	<button class="btn btn-ghost"
+					onclick=window.modals.openCompleteConfirmationModal(@Model.Id)
+				  aria-label="Complete Task">
+					Complete
+	</button>
+	|
 	<a class="btn btn-ghost" 
 		 href="@Url.Action("Index", "Tasks")">
 		 Back to List
@@ -24,6 +31,8 @@
 </div>
 
 <div id="editModalContainer"></div>
+
+@await Html.PartialAsync("_ConfirmationModal")
 
 @section Scripts {
 	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
