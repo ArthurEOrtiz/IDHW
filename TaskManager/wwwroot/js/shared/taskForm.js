@@ -1,13 +1,13 @@
-﻿window.validateTitle = (e) => {
-  const title = e.value;
-  const taskFormTitleValidator = e.nextElementSibling;
+﻿//window.validateTitle = (e) => {
+//  const title = e.value;
+//  const taskFormTitleValidator = e.nextElementSibling;
 
-  taskFormTitleValidator.textContent = title.length < 3
-    ? 'Title must be at least 3 characters long.'
-    : title.length > 50
-      ? 'Title must be less than 50 characters long.'
-      : '';
-};
+//  taskFormTitleValidator.textContent = title.length < 3
+//    ? 'Title must be at least 3 characters long.'
+//    : title.length > 50
+//      ? 'Title must be less than 50 characters long.'
+//      : '';
+//};
 
 window.updateCounter = (e) => {
   const counter = e.nextElementSibling;
@@ -15,20 +15,38 @@ window.updateCounter = (e) => {
 };
 
 
-window.validateDueDate = (e) => {
-  const date = new Date(e.value);
-  date.setHours(0, 0, 0, 0);
+// window.validateDueDate = (e) => {
+//   const date = new Date(e.value);
+//   date.setHours(0, 0, 0, 0);
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+//   const today = new Date();
+//   today.setHours(0, 0, 0, 0);
 
-  const taskFormDateValidator = e.nextElementSibling;
+//   const taskFormDateValidator = e.nextElementSibling;
 
-  taskFormDateValidator.textContent = date < today
-    ? 'Due date must be today or in the future.'
-    : '';
-};
+//   taskFormDateValidator.textContent = date < today
+//     ? 'Due date must be today or in the future.'
+//     : '';
+// };
 
+$(function () {
+  $.validator.addMethod("futuredate", function (value, element) {
+    var today = new Date();
+    today.setHours(0, 0, 0, 0); // Set the time to 00:00:00
+    var inputDate = new Date(value);
+
+    return this.optional(element) || inputDate >= today;
+  }, "");
+
+  $.validator.unobtrusive.adapters.addBool("futuredate");
+});
+
+$(function () {
+  $("form").each(function () {
+    $(this).data("validator", null);
+    $.validator.unobtrusive.parse(this);
+  });
+});
 
 
 

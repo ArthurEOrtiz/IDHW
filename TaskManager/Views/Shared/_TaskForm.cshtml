@@ -1,5 +1,5 @@
 ﻿@model TaskManager.ViewModels.TaskFormViewModel
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@* @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers *@
 
 @using(Html.BeginForm(Model.Action, "Tasks", FormMethod.Post, new {id = Model.FormId}))
 {
@@ -9,7 +9,7 @@
 
   <div class="form-group">
     @Html.LabelFor(model => model.Task.Title, htmlAttributes: new { @class = "control-label" })
-    @Html.EditorFor(model => model.Task.Title, new { htmlAttributes = new { @class = "form-control", oninput = "validateTitle(this)" } })
+    @Html.EditorFor(model => model.Task.Title, new { htmlAttributes = new { @class = "form-control" } })
     @Html.ValidationMessageFor(model => model.Task.Title, "", new { @class = "text-danger" })
   </div>
 
@@ -25,7 +25,7 @@
 
   <div class="form-group">
     @Html.LabelFor(model => model.Task.DueDate, htmlAttributes: new { @class = "control-label" })
-    @Html.TextBoxFor(model => model.Task.DueDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", oninput = "validateDueDate(this)" })
+    @Html.TextBoxFor(model => model.Task.DueDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date"})
     @Html.ValidationMessageFor(model => model.Task.DueDate, "", new { @class = "text-danger" })
   </div>
 
@@ -33,6 +33,18 @@
     <input type="submit" value="Create" class="btn btn-primary" />
   </div>
 }
+
+<script>
+  // $.validator.addMethod("futuredate", function (value, element) {
+  //   var today = new Date();
+  //   today.setHours(0, 0, 0, 0); // Set the time to 00:00:00
+  //   var inputDate = new Date(value);
+
+  //   return this.optional(element) || inputDate >= today;
+  // }, "");
+
+  // $.validator.unobtrusive.adapters.addBool("futuredate");
+</script>
 
 @* <form id="@Model.FormId" 
       asp-action="@Model.Action"
