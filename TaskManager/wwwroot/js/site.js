@@ -48,7 +48,7 @@
           editFormElement.addEventListener('submit', function (e) {
             e.preventDefault();
             const formData = new FormData(this);
-            fetch('Tasks/Edit', {
+            fetch('/Tasks/Edit', {
               method: 'POST',
               body: formData
             })
@@ -62,7 +62,7 @@
                 }
               })
               .catch(error => {
-                console.error(error.message);
+                console.error(error);
                 alert('Network error: ' + error);
               });
           });
