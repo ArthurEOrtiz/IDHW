@@ -1,7 +1,7 @@
 ﻿// Table
 const renderTable = (() => {
   document.addEventListener('DOMContentLoaded', () => {
-    fetch(window.getTasksUrl)
+    fetch('/Tasks/GetTasks/')
       .then(response => response.json())
       .then(data => {
         // Hide the loading spinner
@@ -44,7 +44,7 @@ const createTaskRow = (task) => {
   row.setAttribute('data-bs-toggle', 'tooltip');
   row.setAttribute('title', task.description);
   row.addEventListener('click', () => {
-    window.location.href = window.detailsUrl + '/' + task.id;
+    window.location.href = `/Tasks/Details/${task.id}`;
   });
 
   row.appendChild(createTableCell(task.title));
