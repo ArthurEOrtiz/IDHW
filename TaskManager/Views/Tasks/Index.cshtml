@@ -3,15 +3,14 @@
   ViewData["Title"] = "Tasks";
 }
 
-@section Styles {
-  <link rel="stylesheet" href="~/css/tasks/index.css" />
-}
+@section Styles { <link rel="stylesheet" href="~/css/tasks/index.css" /> }
 
 @model IEnumerable<UserTask>
 
 <div class="container">
   <h2>Tasks</h2>
 
+  <!-- Loading Spinner -->
   <div class="spinner-border text-primary" 
        role="status" 
        id="loadingSpinner">
@@ -20,21 +19,57 @@
 
   <div class="d-flex justify-content-center">
     <div id="tasksTable">
-        <table class="table table-hover">
-          <thead class="thead-dark">
-            <tr>
-              <th>Title</th>
-              <th>Is Completed</th>
-              <th>Due Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Rendered by `renderTable` in index.js -->
-          </tbody>
-        </table>
 
-
+      <!-- Search Bar -->
+      <div class="input-group mb-3">
+        <input type="text"
+               class="form-control"
+               id="searchTitle"
+               placeholder="Search by Title"
+               aria-label="Search by Title"
+               aria-describedby="searchButton">
+      </div>
+      
+      <!-- Table -->
+      <table class="table table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th>
+              Title
+              <a id="ascendingTitle"
+                 class="text-decoration-none"
+                 href="#">
+                 &uarr;
+              </a>
+              <a id="descendingTitle"
+                 class="text-decoration-none"
+                 href="#">
+                 &darr;
+              </a>
+            </th>
+            <th>Is Completed</th>
+            <th>
+              Due Date 
+              <a id="ascendingDueDate"
+                 class="text-decoration-none"
+                 href="#">
+                      &uarr;
+              </a>
+              <a id="descendingDueDate"
+                 class="text-decoration-none"
+                 href="#">
+                      &darr;
+              </a>
+            </th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Rendered in index.js -->
+        </tbody>
+      </table>
+      
+      <!-- Actions -->      
       <button type="button"
               class="btn btn-primary"
               data-bs-toggle="modal"
@@ -57,7 +92,7 @@
 
 <!-- Scripts -->
 @section Scripts {
-  @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+  @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
   <script src="~/js/tasks/index.js"></script>
   <script src="~/js/shared/taskForm.js"></script>
 }

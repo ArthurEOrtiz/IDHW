@@ -12,19 +12,19 @@
 <p>@Model.Description</p>
 
 <div>
-	<button class="btn btn-ghost" 
+	<button class="btn" 
 					onclick=window.modals.openEditModal(@Model.Id)
 					aria-label="Edit">
 					Edit
 	</button> 
 	|
-	<button class="btn btn-ghost @(Model.IsCompleted ? "disabled" : "")"
+	<button class="btn @(Model.IsCompleted ? "disabled" : "")"
 					onclick=window.modals.openCompleteConfirmationModal(@Model.Id)
 				  aria-label="Complete Task">
 					Complete
 	</button>
 	|
-	<a class="btn btn-ghost" 
+	<a class="btn" 
 		 href="@Url.Action("Index", "Tasks")">
 		 Back to List
 	</a>

@@ -18,7 +18,6 @@
       });
   });
 
-
   const createButton = (className, text, clickHandler, task) => {
     const button = document.createElement('button');
     button.className = className;
@@ -86,11 +85,85 @@
     row.appendChild(tdButtons);
 
     return row;
-   }
+  }
+
+  // Search by Title
+  searchByTitle = () => {
+    const searchValue = document.getElementById('searchTitle').value.toLowerCase();
+    const tasks = Array.from(document.querySelectorAll('#tasksTable tbody tr'));
+
+    tasks.forEach(task => {
+      const title = task.children[0].textContent.toLowerCase();
+      if (title.includes(searchValue)) {
+        task.style.display = '';
+      } else {
+        task.style.display = 'none';
+      }
+    });
+  }
+
+  document.getElementById('searchTitle').addEventListener('input', () => {
+    searchByTitle()
+  });
+
+
+  // Order by Title
+  orderTasksByTitle = (order) => {
+    const tasks = Array.from(document.querySelectorAll('#tasksTable tbody tr'));
+    const sortedTasks = tasks.sort((a, b) => {
+      const titleA = a.children[0].textContent.toLowerCase();
+      const titleB = b.children[0].textContent.toLowerCase();
+      // localeCompare() returns a negative number if the first string comes before the second string
+      // returns a positive number if the first string comes after the second string
+      // returns 0 if the strings are equal
+      // This basically sorts strings in *lexicographical* order.
+      return order === 'asc' ? titleA.localeCompare(titleB) : titleB.localeCompare(titleA);
+    });
+
+    const tbody = document.querySelector('#tasksTable tbody');
+
+    sortedTasks.forEach(task => {
+      tbody.appendChild(task);
+    });
+  }
+
+  document.getElementById('ascendingTitle').addEventListener('click', () => {
+    orderTasksByTitle('asc');
+  });
+
+  document.getElementById('descendingTitle').addEventListener('click', () => {
+    orderTasksByTitle('desc');
+  });
+
+  // Order by Due Date
+  orderTasksByDueDate = (order) => {
+    const tasks = Array.from(document.querySelectorAll('#tasksTable tbody tr'));
+    const sortedTasks = tasks.sort((a, b) => {
+      const dateA = new Date(a.children[2].textContent);
+      const dateB = new Date(b.children[2].textContent);
+
+      return order === 'asc' ? dateA - dateB : dateB - dateA;
+    });
+
+    const tbody = document.querySelector('#tasksTable tbody');
+
+    sortedTasks.forEach(task => {
+      tbody.appendChild(task);
+    });
+  }
+
+  document.getElementById('ascendingDueDate').addEventListener('click', () => {
+    orderTasksByDueDate('asc');
+  });
+
+
+  document.getElementById('descendingDueDate').addEventListener('click', () => {
+    orderTasksByDueDate('desc');
+  });
 
   // Create Task Modal
   // So far this only happens in index.cshtml, this could move if things change.
-  // Edit and Confirmation modals are in site.js as they will be needed else where.
+  // Edit and Confirmation modals are in site.js, they will be needed else where.
   const createTaskModal = new bootstrap.Modal(document.getElementById('createTaskModal'));
   const createForm = document.getElementById('createForm');
 
