@@ -1,5 +1,5 @@
 ﻿(() => {
-// Render Table onLoad.
+  // Render Table onLoad.
   document.addEventListener('DOMContentLoaded', () => {
     fetch('/Tasks/GetTasks/')
       .then(response => response.json())
@@ -18,6 +18,7 @@
       });
   });
 
+  // Render Table Helper methods
   const createButton = (className, text, clickHandler, task) => {
     const button = document.createElement('button');
     button.className = className;
