@@ -5,12 +5,14 @@
 
 @model TaskManager.Models.UserTask
 
-<h2>@Model.Title</h2>
+<div>
+	<h2>@Model.Title</h2>
+	<p>Is completed: @Model.IsCompleted</p>
+</div>
 
-<p>Is completed: @Model.IsCompleted</p>
-
-<p>@Model.Description</p>
-
+<div>
+	<p>@Model.Description</p>
+</div>
 <div>
 	<button class="btn" 
 					onclick=window.modals.openEditModal(@Model.Id)
